@@ -10,27 +10,36 @@ pipeline {
 
     stages {
 
-        stage('Build and Push Docker Image') {
-            steps {
-                script {
-                    // Build the Docker image using the Dockerfile
-                    def newImage = docker.build(env.DOCKER_IMAGE_NAME, "-f Dockerfile .")
-                    // Authenticate with Docker Hub using the Jenkins secret credential
+        // stage('Build and Push Docker Image') {
+        //     steps {
+        //         script {
+        //             // Build the Docker image using the Dockerfile
+        //             def newImage = docker.build(env.DOCKER_IMAGE_NAME, "-f Dockerfile .")
 
-                    sh 'echo "Build Successfully"'
+        //             // docker.withRegistry(env.REGISTRY_URL, env.DOCKERHUB_CREDENTIAL) {
+        //             //     // Push the built image to Docker Hub
+        //             //     newImage.push("${env.BUILD_NUMBER}")
+        //             // }
 
-                    // docker.withRegistry(env.REGISTRY_URL, env.DOCKERHUB_CREDENTIAL) {
-                    //     // Push the built image to Docker Hub
-                    //     newImage.push("${env.BUILD_NUMBER}")
-                    // }
+        //             docker.withRegistry(env.REGISTRY_URL, 'docker-id-passwd') {
+        //                 // Push the built image to Docker Hub
+        //                 newImage.push("${env.BUILD_NUMBER}")
+        //             }
+        //         }
+        //     }
+        // }
 
-                    docker.withRegistry(env.REGISTRY_URL, 'docker-id-passwd') {
-                        // Push the built image to Docker Hub
-                        newImage.push("${env.BUILD_NUMBER}")
-                    }
-                }
+        stage('Build image') {
+
+            app = docker.build("sample-django-app")
+        }
+
+        stage('Push image') {
+            docker.withRegistry('https://registry.hub.docker.com', 'docker-cred') {
+                app.push("${env.BUILD_NUMBER}")
             }
         }
+
     }
 
     post {

@@ -18,9 +18,9 @@ pipeline {
 
                     sh 'echo "Build Successfully"'
 
-                    docker.withRegistry('https://registry.hub.docker.com','docker-cred') {
+                    docker.withRegistry('', env.DOCKERHUB_CREDENTIAL) {
                         // Push the built image to Docker Hub
-                        newmage.push("${env.BUILD_NUMBER}")
+                        newmage.push()
                     }
                 }
             }

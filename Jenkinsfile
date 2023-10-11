@@ -4,7 +4,7 @@ pipeline {
     environment {
         // Define the Docker Hub credentials from Jenkins secret
         DOCKERHUB_CREDENTIAL = credentials('docker-cred')
-        DOCKER_IMAGE_NAME = 'simple-flask-app'
+        DOCKER_IMAGE_NAME = 'simple-django-app'
     }
 
     stages {

@@ -19,7 +19,12 @@ pipeline {
 
                     sh 'echo "Build Successfully"'
 
-                    docker.withRegistry(env.REGISTRY_URL, env.DOCKERHUB_CREDENTIAL) {
+                    // docker.withRegistry(env.REGISTRY_URL, env.DOCKERHUB_CREDENTIAL) {
+                    //     // Push the built image to Docker Hub
+                    //     newImage.push("${env.BUILD_NUMBER}")
+                    // }
+
+                    docker.withRegistry(env.REGISTRY_URL, 'docker-cred') {
                         // Push the built image to Docker Hub
                         newImage.push("${env.BUILD_NUMBER}")
                     }

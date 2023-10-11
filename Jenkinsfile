@@ -15,7 +15,10 @@ pipeline {
                     // Build the Docker image using the Dockerfile
                     def newImage = docker.build(env.DOCKER_IMAGE_NAME, "-f Dockerfile .")
                     // Authenticate with Docker Hub using the Jenkins secret credential
-                    docker.withRegistry('', env.DOCKERHUB_CREDENTIAL) {
+
+                    sh 'echo "Build Successfully"'
+
+                    docker.withRegistry('https://registry.hub.docker.com','docker-cred') {
                         // Push the built image to Docker Hub
                         newmage.push("${env.BUILD_NUMBER}")
                     }

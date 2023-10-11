@@ -20,7 +20,7 @@ pipeline {
 
                     docker.withRegistry('', env.DOCKERHUB_CREDENTIAL) {
                         // Push the built image to Docker Hub
-                        newmage.push()
+                        newImage.push("${env.BUILD_NUMBER}")
                     }
                 }
             }

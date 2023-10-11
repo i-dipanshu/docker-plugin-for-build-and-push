@@ -24,7 +24,7 @@ pipeline {
                     //     newImage.push("${env.BUILD_NUMBER}")
                     // }
 
-                    docker.withRegistry(env.REGISTRY_URL, 'docker-cred') {
+                    docker.withRegistry(env.REGISTRY_URL, 'docker-id-passwd') {
                         // Push the built image to Docker Hub
                         newImage.push("${env.BUILD_NUMBER}")
                     }
